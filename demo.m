@@ -12,7 +12,7 @@ img = imread(['D:/dataset/newFood_724_clean/saliency/tauhu_goreng/Tauhu_Goreng58
 img = imresize(img, [256 256]);
 online = 1; % whether extract features online or load pre-extracted features
 
-load('categories1000.mat');
+load('newFood724_class.mat');
 if online == 1
     % load the CAM model and extract features
 
@@ -52,7 +52,7 @@ for j=1:topNum
     curHeatMap = map2jpg(curCAMmap_image, [], 'jet');
     curHeatMap = im2double(img)*0.2+curHeatMap*0.7;
     curResult = [curResult ones(size(curHeatMap,1),8,3) curHeatMap];
-    curPrediction = [curPrediction ' --top'  num2str(j) ':' categories{IDX_category(j)}];
+    curPrediction = [curPrediction ' --top'  num2str(j) ':' food_class{IDX_category(j)}];
     
 end
 figure,imshow(curResult);
