@@ -5,7 +5,7 @@
 % Bolei Zhou. 
 
 %addpath('caffeCPU2/matlab/caffe');
-%addpath('D:/Projects/caffe-windows/caffe-master/Build/x64/Release/matcaffe/+caffe/private');
+%addpath('D:/Projects/caffe-windows/caffe-master/matlab');
 
 modelSetFolder = 'CAMnet';
 
@@ -21,8 +21,8 @@ modelSetFolder = 'CAMnet';
 % model_def_file = [modelSetFolder '/alexnet/deploy_caffeNetCAM.prototxt'];
 
 netName = 'CAM_googlenetBVLCshrink_imagenet';
-model_file = [modelSetFolder '/googlenet_imagenet/CAMmodels/imagenet_googleletCAM_train_iter_80000.caffemodel'];
-model_def_file = [modelSetFolder '/googlenet_imagenet/deploy_googlenetCAM.prototxt'];
+model_file = ['models/newFood724/imagenet_googlenetCAM_train_iter_160000.caffemodel'];
+model_def_file = ['models/deploy_googlenetCAM.prototxt'];
 
 
 % netName = 'CAM_VGG16_imagenet';
@@ -31,13 +31,19 @@ model_def_file = [modelSetFolder '/googlenet_imagenet/deploy_googlenetCAM.protot
 
 
 %% loading the network
-caffe('init', model_def_file, model_file,'test');
-caffe('set_mode_gpu');
-caffe('set_device',0);
+%caffe('init', model_def_file, model_file,'test');
+%caffe('set_mode_gpu');
+%caffe('set_device',0);
+
+caffe.Net(model_def_file, model_file,'test');
+caffe.set_mode_gpu();
+caffe.set_device(0);
 
 %% testing to predict some image
 
-weights = caffe('get_weights');
+%weights = caffe('get_weights');
+weights = caffe.get_weights();
+
 weights_LR = squeeze(weights(end,1).weights{1,1});
 bias_LR = weights(end,1).weights{2,1};
 layernames = caffe('get_names');
